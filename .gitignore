@@ -276,3 +276,7 @@ lexmapr_django/media/
 .env
 .envs/*
 !.envs/.local/
+
+### JetBrains
+
+.idea/**
