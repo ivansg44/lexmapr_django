@@ -7,10 +7,15 @@ class PipelineForm(forms.Form):
     """TODO: ..."""
 
     # Form fields
-    favorite_color = forms.CharField(
-        label="What is your favorite color?",
-        max_length=80,
-        required=True,
+    input_file = forms.FileField(
+        label="Input file"
+    )
+    config_file = forms.FileField(
+        label="Config file"
+    )
+    output_format = forms.BooleanField(
+        label="Full format",
+        required=False
     )
 
     def __init__(self, *args, **kwargs):

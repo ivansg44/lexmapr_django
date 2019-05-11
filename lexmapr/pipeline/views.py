@@ -13,9 +13,12 @@ def get_pipeline_input(request):
 def process_pipeline_input(request):
     """Processes data submitted to input form for pipeline."""
 
-    # Create PipelineForm instance, with data from POST request
-    form = PipelineForm(request.POST)
+    # Create PipelineForm instance, with submitted data
+    form = PipelineForm(request.POST, request.FILES)
 
-    # Input accessible through `form.data`
+    if form.is_valid():
+        input_file = form.cleaned_data["input_file"]
+        config_file = form.cleaned_data["config_file"]
+        output_format = form.cleaned_data["output_format"]
 
     return redirect("pipeline:")
