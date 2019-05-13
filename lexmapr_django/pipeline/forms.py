@@ -13,7 +13,7 @@ class PipelineForm(forms.Form):
     config_file = forms.FileField(
         label="Config file"
     )
-    output_format = forms.BooleanField(
+    full_format = forms.BooleanField(
         label="Full format",
         required=False
     )

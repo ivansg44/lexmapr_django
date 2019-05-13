@@ -19,6 +19,6 @@ def process_pipeline_input(request):
     if form.is_valid():
         input_file = form.cleaned_data["input_file"]
         config_file = form.cleaned_data["config_file"]
-        output_format = form.cleaned_data["output_format"]
+        full_format = form.cleaned_data["full_format"]
 
     return redirect("pipeline:")

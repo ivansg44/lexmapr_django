@@ -1,7 +1,10 @@
 LexMapr Django
 ==============
 
-Django-powered interface for the LexMapr package.
+Django-powered interface for the `LexMapr package`_.
+
+
+.. _`LexMapr package`:: https://github.com/Public-Health-Bioinformatics/LexMapr
 
 .. image:: https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg
      :target: https://github.com/pydanny/cookiecutter-django/
