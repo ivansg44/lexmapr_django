@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
 
-from lexmapr.pipeline.forms import PipelineForm
+from lexmapr_django.pipeline.forms import PipelineForm
 
 
 def get_pipeline_input(request):

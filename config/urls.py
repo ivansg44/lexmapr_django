@@ -16,7 +16,8 @@ urlpatterns = [
     path("users/", include("lexmapr_django.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
-    path("pipeline/", include("lexmapr.pipeline.urls", namespace="pipeline"))
+    path("pipeline/", include("lexmapr_django.pipeline.urls",
+                              namespace="pipeline"))
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
