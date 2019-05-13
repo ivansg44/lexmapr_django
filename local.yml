@@ -31,3 +31,6 @@ services:
       - local_postgres_data_backups:/backups
     env_file:
       - ./.envs/.local/.postgres
+    ports:
+      # Expose port so database can be viewed via external connections
+      - "5432:5432"
