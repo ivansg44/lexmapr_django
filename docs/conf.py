@@ -240,7 +240,7 @@ texinfo_documents = [
         "LexMapr Django Documentation",
         """Ivan Sohrab Gill""",
         "LexMapr Django",
-        """for the LexMapr package.""",
+        """Django-powered interface for the LexMapr package.""",
         "Miscellaneous",
     )
 ]
