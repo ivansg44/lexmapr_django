@@ -13,7 +13,10 @@ RUN apk update \
   # Translations dependencies
   && apk add gettext \
   # https://docs.djangoproject.com/en/dev/ref/django-admin/#dbshell
-  && apk add postgresql-client
+  && apk add postgresql-client \
+  # Install git so we can install the original LexMapr repository as a
+  # package in requirements.txt.
+  && apk add git
 
 # Requirements are installed here to ensure they will be cached.
 COPY ./requirements /requirements
