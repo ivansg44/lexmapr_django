@@ -4,7 +4,7 @@ from django.views.decorators.http import require_POST
 from lexmapr_django.pipeline.forms import PipelineForm
 
 
-def get_pipeline_input(request):
+def render_pipeline_form(request):
     """Render input form for pipeline."""
     return render(request, "pages/pipeline.html", {"form": PipelineForm()})
 
