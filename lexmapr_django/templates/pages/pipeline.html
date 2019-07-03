@@ -3,4 +3,4 @@
 {% load i18n %}
 {% load crispy_forms_tags %}
 
-{% block content %}{% crispy form %}{% endblock %}
+{% block content %}{% crispy form %}{{ results|linebreaks }}{% endblock %}

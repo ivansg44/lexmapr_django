@@ -7,7 +7,18 @@ from lexmapr_django.pipeline.utils import run_lexmapr
 
 def render_pipeline_form(request):
     """Render input form for pipeline."""
-    return render(request, "pages/pipeline.html", {"form": PipelineForm()})
+
+    # Just successfully ran ``process_pipeline_input``
+    if "results" in request.session:
+        results = request.session["results"]
+        # Remove results from session
+        request.session.pop("results", None)
+        request.session.modified = True
+    else:
+        results = ""
+
+    return render(request, "pages/pipeline.html", {"form": PipelineForm(),
+                                                   "results": results})
 
 
 @require_POST
@@ -23,5 +34,8 @@ def process_pipeline_input(request):
         full_format = form.cleaned_data["full_format"]
 
         results = run_lexmapr(input_file, config_file, full_format)
+    else:
+        results = "Form not valid"
 
+    request.session["results"] = results
     return redirect("pipeline:")
