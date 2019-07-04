@@ -6,16 +6,8 @@ from django import forms
 class PipelineForm(forms.Form):
     """TODO: ..."""
 
-    # Form fields
     input_file = forms.FileField(
         label="Input file"
-    )
-    config_file = forms.FileField(
-        label="Config file"
-    )
-    full_format = forms.BooleanField(
-        label="Full format",
-        required=False
     )
 
     def __init__(self, *args, **kwargs):

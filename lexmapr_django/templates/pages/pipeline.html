@@ -3,4 +3,18 @@
 {% load i18n %}
 {% load crispy_forms_tags %}
 
-{% block content %}{% crispy form %}{{ results|linebreaks }}{% endblock %}
+{% block content %}
+  lexmapr-django is still in the development phase, and is currently catered towards food and environmental samples.
+  <br>
+  <br>
+  {% crispy form %}
+  <table style="width:100%">
+    {% for row in results %}
+      <tr>
+        {% for val in row %}
+          <td>{{ val }}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

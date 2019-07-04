@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
 
 from lexmapr_django.pipeline.forms import PipelineForm
-from lexmapr_django.pipeline.utils import run_lexmapr
+from lexmapr_django.pipeline.utils import results_to_matrix, run_lexmapr
 
 
 def render_pipeline_form(request):
@@ -30,12 +30,10 @@ def process_pipeline_input(request):
 
     if form.is_valid():
         input_file = form.cleaned_data["input_file"]
-        config_file = form.cleaned_data["config_file"]
-        full_format = form.cleaned_data["full_format"]
 
-        results = run_lexmapr(input_file, config_file, full_format)
+        results = run_lexmapr(input_file)
     else:
         results = "Form not valid"
 
-    request.session["results"] = results
+    request.session["results"] = results_to_matrix(results)
     return redirect("pipeline:")
