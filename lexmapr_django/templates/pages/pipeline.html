@@ -8,13 +8,17 @@
   <br>
   <br>
   {% crispy form %}
-  <table class="table table-bordered">
-    {% for row in results %}
-      <tr>
-        {% for val in row %}
-          <td>{{ val }}</td>
+  {% if results %}
+    <div id="pipeline_results">
+      <table class="table table-bordered">
+        {% for row in results %}
+          <tr>
+            {% for val in row %}
+              <td>{{ val }}</td>
+            {% endfor %}
+          </tr>
         {% endfor %}
-      </tr>
-    {% endfor %}
-  </table>
+      </table>
+    </div>
+  {% endif %}
 {% endblock %}
