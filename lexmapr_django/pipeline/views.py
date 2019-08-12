@@ -10,15 +10,20 @@ def render_pipeline_form(request):
 
     # Just successfully ran ``process_pipeline_input``
     if "results" in request.session:
-        results = request.session["results"]
+        results_str = request.session["results"]["results_str"]
+        results_matrix = request.session["results"]["results_matrix"]
+
         # Remove results from session
         request.session.pop("results", None)
         request.session.modified = True
-    else:
-        results = ""
 
-    return render(request, "pages/pipeline.html", {"form": PipelineForm(),
-                                                   "results": results})
+        return render(request, "pages/pipeline_results.html", {
+            "form": PipelineForm(),
+            "results_str": results_str,
+            "results_matrix": results_matrix
+        })
+    else:
+        return render(request, "pages/pipeline.html", {"form": PipelineForm()})
 
 
 @require_POST
@@ -35,5 +40,8 @@ def process_pipeline_input(request):
     else:
         results = "Form not valid"
 
-    request.session["results"] = results_to_matrix(results)
+    request.session["results"] = {}
+    request.session["results"]["results_str"] = results
+    request.session["results"]["results_matrix"] = results_to_matrix(results)
+
     return redirect("pipeline:")

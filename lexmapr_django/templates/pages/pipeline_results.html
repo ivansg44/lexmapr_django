@@ -1,0 +1,16 @@
+{% extends "pages/pipeline.html" %}
+
+{% block results %}
+  <div id="pipeline_results">
+    <table class="table table-bordered">
+      {% for row in results_matrix %}
+        <tr>
+          {% for val in row %}
+            <td>{{ val }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <button type="button" class="btn btn-primary mt-3">Download (.tsv)</button>
+{% endblock %}
