@@ -11,14 +11,12 @@
 
   {% crispy form %}
 
-  {% if job_id %}
+  {% if job_submission_status == 200 %}
     <p>Job submitted. When completed, results will be available at:</p>
-    <a href="{% url 'pipeline:temp' job_id=job_id %}">
-      {% url 'pipeline:temp' job_id=job_id %}
-    </a>
+    <a href="{{ job.get_absolute_url }}">{{ job.get_absolute_url }}</a>
   {% endif %}
 
-  {% if job_not_created %}
+  {% if job_submission_status == 400 %}
     <p class="text-danger">
       Something went wrong when validating the above form. Please contact us.
     </p>

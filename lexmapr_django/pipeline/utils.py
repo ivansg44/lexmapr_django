@@ -1,12 +1,19 @@
 from argparse import Namespace
+from random import getrandbits
 from tempfile import TemporaryDirectory
 
 from lexmapr.pipeline import run
 
+from lexmapr_django.pipeline.models import PipelineJob
 
-def create_pipeline_job(job_id):
+
+def create_pipeline_job():
     """TODO:..."""
-    return
+    job_id = getrandbits(128)
+    pipeline_job = PipelineJob(id=job_id, complete=False, input="test",
+                               output="test")
+    pipeline_job.save()
+    return job_id
 
 
 def run_lexmapr(input_file):
