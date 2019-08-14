@@ -4,11 +4,24 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-  <div class="mb-4">
+  <p class="mb-4">
     lexmapr-django is still in the development phase, and is currently catered
     towards food and environmental samples.
-  </div>
+  </p>
+
   {% crispy form %}
-  {% block results %}
-  {% endblock %}
+
+  {% if job_id %}
+    <p>Job submitted. When completed, results will be available at:</p>
+    <a href="{% url 'pipeline:temp' job_id=job_id %}">
+      {% url 'pipeline:temp' job_id=job_id %}
+    </a>
+  {% endif %}
+
+  {% if job_not_created %}
+    <p class="text-danger">
+      Something went wrong when validating the above form. Please contact us.
+    </p>
+  {% endif %}
+
 {% endblock %}

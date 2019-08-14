@@ -4,8 +4,13 @@ from tempfile import TemporaryDirectory
 from lexmapr.pipeline import run
 
 
+def create_pipeline_job(job_id):
+    """TODO:..."""
+    return
+
+
 def run_lexmapr(input_file):
-    """Run LexMapr package with specified arguments."""
+    """TODO:..."""
 
     # Need to convert InMemoryUploadedFile values to actual files
     with TemporaryDirectory() as tmp_dir:
