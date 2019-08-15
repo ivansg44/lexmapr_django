@@ -1,9 +1,11 @@
-from django.shortcuts import redirect, render
+from datetime import datetime
+
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
 from lexmapr_django.pipeline.forms import PipelineForm
 from lexmapr_django.pipeline.models import PipelineJob
-from lexmapr_django.pipeline.utils import create_pipeline_job
+from lexmapr_django.pipeline.utils import (create_pipeline_job, results_to_matrix)
 
 
 def render_pipeline_form(request):
@@ -44,7 +46,8 @@ def process_pipeline_input(request):
     request.session["job_submission"] = {}
 
     if form.is_valid():
-        job_id = create_pipeline_job()
+        input_file = form.cleaned_data["input_file"]
+        job_id = create_pipeline_job(input_file)
 
         request.session["job_submission"] = {"status": 200, "id": job_id}
     else:
@@ -55,4 +58,12 @@ def process_pipeline_input(request):
 
 def render_pipeline_results(request, job_id):
     """TODO:..."""
-    return render(request, "pages/pipeline_results.html")
+    job = get_object_or_404(PipelineJob, id=job_id,
+                            expires__gte=datetime.now())
+
+    # Live, up-to-date results in matrix-form
+    results_matrix = results_to_matrix(job)
+
+    return render(request, "pages/pipeline_results.html", {
+        "job": job, "results_matrix": results_matrix
+    })

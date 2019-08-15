@@ -2,18 +2,39 @@ from argparse import Namespace
 from random import getrandbits
 from tempfile import TemporaryDirectory
 
+from django.core.files.base import ContentFile
 from lexmapr.pipeline import run
 
 from lexmapr_django.pipeline.models import PipelineJob
 
 
-def create_pipeline_job():
+def create_pipeline_job(input_file):
     """TODO:..."""
     job_id = getrandbits(128)
-    pipeline_job = PipelineJob(id=job_id, complete=False, input="test",
-                               output="test")
-    pipeline_job.save()
+    job = PipelineJob(id=job_id)
+    job.save()
+
+    job.input_file.save(str(job_id) + ".csv", input_file)
+    job.output_file.save(str(job_id) + ".tsv", ContentFile(""))
+
+    try:
+        execute_pipeline_job(job)
+    except Exception as e:
+        job.err = True
+        job.err_msg = str(e)
+        job.save()
+
     return job_id
+
+
+def execute_pipeline_job(job):
+    """TODO:..."""
+    run(Namespace(input_file=job.input_file.path,
+                  config="envo_foodon_config.json", format="basic",
+                  output=job.output_file.path, version=False, bucket=True))
+
+    job.complete = True
+    job.save()
 
 
 def run_lexmapr(input_file):
@@ -41,10 +62,11 @@ def run_lexmapr(input_file):
     return ret
 
 
-def results_to_matrix(results):
-    """Convert results to matrix for easy table rendering."""
+def results_to_matrix(job):
+    """TODO:..."""
     table = []
 
+    results = job.output_file.read().decode("utf-8")
     results_rows = results.split("\n")
     for results_row in results_rows:
         table.append(results_row.split("\t"))

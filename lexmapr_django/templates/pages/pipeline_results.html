@@ -1,10 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <p class="my-4">Your job is still running</p>
-  <div class="spinner-border" role="status">
-    <span class="sr-only">Job running...</span>
-  </div>
+  <p class="text-warning">This page will expire on {{ job.expires }}</p>
+
+  {% if job.err %}
+    <p class="text-danger">Something went wrong:</p>
+    <p>{{ job.err_msg }}</p>
+  {% elif not job.complete %}
+    <p>Your job is still running</p>
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Job running...</span>
+    </div>
+  {% endif %}
 
   <div id="pipeline_results">
     <table class="table table-bordered">
@@ -17,5 +24,6 @@
       {% endfor %}
     </table>
   </div>
-  <button type="button" class="btn btn-primary mt-3">Download (.tsv)</button>
+  {#  <button type="button" class="btn btn-primary mt-3">Download (.tsv)</button>#}
+
 {% endblock %}
