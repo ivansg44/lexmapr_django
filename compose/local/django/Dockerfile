@@ -23,7 +23,7 @@ COPY ./requirements /requirements
 RUN pip install -r /requirements/local.txt
 
 # Required by LexMapr package
-RUN python -m nltk.downloader all
+RUN for i in 1 2 3 4 5 6 7 8; do python -m nltk.downloader all && break || sleep 15; done
 
 COPY ./compose/production/django/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
