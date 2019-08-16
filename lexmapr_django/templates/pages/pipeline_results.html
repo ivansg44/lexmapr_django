@@ -8,22 +8,28 @@
     <p>{{ job.err_msg }}</p>
   {% elif not job.complete %}
     <p>Your job is still running</p>
-    <div class="spinner-border" role="status">
+    <div class="spinner-border" id="job-still-running" role="status">
       <span class="sr-only">Job running...</span>
     </div>
-  {% endif %}
+  {% else %}
+    <div id="pipeline_results">
+      <table class="table table-bordered">
+        {% for row in results_matrix %}
+          <tr>
+            {% for val in row %}
+              <td>{{ val }}</td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
 
-  <div id="pipeline_results">
-    <table class="table table-bordered">
-      {% for row in results_matrix %}
-        <tr>
-          {% for val in row %}
-            <td>{{ val }}</td>
-          {% endfor %}
-        </tr>
-      {% endfor %}
-    </table>
-  </div>
-  {#  <button type="button" class="btn btn-primary mt-3">Download (.tsv)</button>#}
+{#    {% load med %}#}
+{#    <a href="{% static '' %}">#}
+{#      <button type="button" class="btn btn-primary mt-3">#}
+{#        Download (.tsv)#}
+{#      </button>#}
+{#    </a>#}
+  {% endif %}
 
 {% endblock %}
