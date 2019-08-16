@@ -5,7 +5,7 @@ volumes:
   local_postgres_data_backups: {}
 
 services:
-  django:
+  django: &django
     build:
       context: .
       dockerfile: ./compose/local/django/Dockerfile
@@ -34,3 +34,33 @@ services:
     ports:
       # Expose port so database can be viewed via external connections
       - "5432:5432"
+
+  redis:
+    image: redis:5.0
+
+  celeryworker:
+    <<: *django
+    image: lexmapr_django_local_celeryworker
+    depends_on:
+      - redis
+      - postgres
+
+    ports: []
+    command: /start-celeryworker
+
+  celerybeat:
+    <<: *django
+    image: lexmapr_django_local_celerybeat
+    depends_on:
+      - redis
+      - postgres
+
+    ports: []
+    command: /start-celerybeat
+
+  flower:
+    <<: *django
+    image: lexmapr_django_local_flower
+    ports:
+      - "5555:5555"
+    command: /start-flower
