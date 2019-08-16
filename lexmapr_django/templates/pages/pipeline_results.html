@@ -24,12 +24,11 @@
       </table>
     </div>
 
-{#    {% load med %}#}
-{#    <a href="{% static '' %}">#}
-{#      <button type="button" class="btn btn-primary mt-3">#}
-{#        Download (.tsv)#}
-{#      </button>#}
-{#    </a>#}
+    <a href="{{ job.output_file.url }}">
+      <button type="button" class="btn btn-primary mt-3">
+        Download (.tsv)
+      </button>
+    </a>
   {% endif %}
 
 {% endblock %}
