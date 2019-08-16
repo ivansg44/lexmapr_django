@@ -1,14 +1,14 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 
-from django.contrib.postgres.fields import ArrayField
 from django.db.models import (
     Model, BooleanField, CharField, DateTimeField, FileField, TextField
 )
 from django.urls import reverse
+from django.utils import timezone
 
 
 def get_expiry_date():
-    return datetime.now() + timedelta(days=7)
+    return timezone.now() + timedelta(days=7)
 
 
 class PipelineJob(Model):
