@@ -15,6 +15,7 @@ def get_expiry_date():
 
 
 class PipelineJob(Model):
+    """Represents job to be run on the original LexMapr pipeline."""
     id = CharField(max_length=128, primary_key=True)
     complete = BooleanField(default=False)
     input_file = FileField(upload_to="input_files/", blank=True)

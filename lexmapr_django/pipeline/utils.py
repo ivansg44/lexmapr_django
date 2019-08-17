@@ -3,11 +3,19 @@ from random import getrandbits
 from django.core.files.base import ContentFile
 
 from lexmapr_django.pipeline.models import PipelineJob
-from lexmapr_django.pipeline.tasks import run_lexmapr, remove_stale_jobs
+from lexmapr_django.pipeline.tasks import run_lexmapr
 
 
 def create_pipeline_job(input_file):
-    """TODO:..."""
+    """Create ``PipelineJob`` object.
+
+    :param input_file: Input file uploaded by user in ``PipelineForm``
+        instance
+    :type input_file:
+        django.core.files.uploadedfile.InMemoryUploadedFile
+    :returns: Created ``PipelineJob`` object ``id`` value
+    :rtype: str
+    """
     job_id = getrandbits(128)
     job = PipelineJob(id=job_id)
     job.save()
@@ -20,8 +28,16 @@ def create_pipeline_job(input_file):
     return job_id
 
 
-def results_to_matrix(job):
-    """TODO:..."""
+def results_to_matrix(job_id):
+    """Convert ``output_file`` contents of job to matrix.
+
+    The matrix is tab-delimited.
+
+    :param str job_id: ``id`` value of ``PipelineJob`` object
+    :returns: Tab-delimited matrix
+    :rtype: list of list
+    """
+    job = PipelineJob.objects.get(id=job_id)
     table = []
 
     results = job.output_file.read().decode("utf-8")

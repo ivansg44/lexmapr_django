@@ -11,17 +11,17 @@ from lexmapr_django.pipeline.utils import (create_pipeline_job, results_to_matri
 def render_pipeline_form(request):
     """Render pipeline input form.
 
-    If the user just submitted a form, also renders a hyperlink to the
-    eventual results of their job.
+    If the user just submitted something, also renders a hyperlink to
+    the eventual results of an associated ``PipelineJob`` object.
     """
     job_submission_status = None
     job = None
 
-    # Just tried to create a job through ``process_pipeline_input``
+    # User just submitted something
     if "job_submission" in request.session:
         job_submission_status = request.session["job_submission"]["status"]
 
-        # Succeeded in creating a job
+        # Succeeded in creating a ``PipelineJob`` object
         if job_submission_status == 200:
             job_id = request.session["job_submission"]["id"]
             job = PipelineJob.objects.get(id=job_id)
@@ -38,9 +38,10 @@ def render_pipeline_form(request):
 
 @require_POST
 def process_pipeline_input(request):
-    """Submits data from pipeline form submission to pipeline job.
+    """``PipelineJob`` object created from ``PipelineForm`` submission.
 
-    Also stores job information in session.
+    Job information is also stored in session, for purposes described
+    in ``render_pipeline_form``.
     """
     form = PipelineForm(request.POST, request.FILES)
     request.session["job_submission"] = {}
@@ -57,12 +58,17 @@ def process_pipeline_input(request):
 
 
 def render_pipeline_results(request, job_id):
-    """TODO:..."""
+    """Renders ``PipelineJob`` object ``output_file`` contents.
+
+    If ``PipelineJob.complete`` is ``False``, the user is notified that
+    their job is still running.
+
+    :param str job_id: ``id`` value of ``PipelineJob`` object
+    """
     job = get_object_or_404(PipelineJob, id=job_id,
                             expires__gte=datetime.now())
 
-    # Live, up-to-date results in matrix-form
-    results_matrix = results_to_matrix(job)
+    results_matrix = results_to_matrix(job_id)
 
     return render(request, "pages/pipeline_results.html", {
         "job": job, "results_matrix": results_matrix

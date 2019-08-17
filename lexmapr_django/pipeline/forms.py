@@ -4,8 +4,6 @@ from django import forms
 
 
 class PipelineForm(forms.Form):
-    """TODO: ..."""
-
     input_file = forms.FileField(
         label="Input file"
     )

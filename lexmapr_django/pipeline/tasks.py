@@ -9,8 +9,18 @@ from lexmapr_django.pipeline.models import PipelineJob
 
 @celery_app.task()
 def run_lexmapr(job_id):
-    """TODO:..."""
+    """Execute ``PipelineJob`` object.
+
+    This means running the original LexMapr pipeline using parameters
+    set by the object, and in this function.
+
+    If the execution succeeds, the object's ``complete`` field is set
+    to ``True``.
+
+    :param str job_id: ``id`` value of ``PipelineJob`` object
+    """
     job = PipelineJob.objects.get(id=job_id)
+
     try:
         run(Namespace(input_file=job.input_file.path,
                       config="envo_foodon_config.json", format="basic",
@@ -25,6 +35,9 @@ def run_lexmapr(job_id):
 
 @celery_app.task()
 def remove_stale_jobs():
-    """TODO:..."""
+    """Remove ``PipelineJob`` objects that have expired.
+
+    This task is meant to be run periodically.
+    """
     stale_jobs = PipelineJob.objects.filter(expires__lte=timezone.now())
     stale_jobs.delete()
