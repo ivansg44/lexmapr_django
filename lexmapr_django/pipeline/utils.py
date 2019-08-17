@@ -3,7 +3,7 @@ from random import getrandbits
 from django.core.files.base import ContentFile
 
 from lexmapr_django.pipeline.models import PipelineJob
-from lexmapr_django.pipeline.tasks import run_lexmapr
+from lexmapr_django.pipeline.tasks import run_lexmapr, remove_stale_jobs
 
 
 def create_pipeline_job(input_file):

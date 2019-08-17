@@ -1,5 +1,6 @@
 from argparse import Namespace
 
+from django.utils import timezone
 from lexmapr.pipeline import run
 
 from config import celery_app
@@ -20,3 +21,10 @@ def run_lexmapr(job_id):
 
     job.complete = True
     job.save()
+
+
+@celery_app.task()
+def remove_stale_jobs():
+    """TODO:..."""
+    stale_jobs = PipelineJob.objects.filter(expires__lte=timezone.now())
+    stale_jobs.delete()
