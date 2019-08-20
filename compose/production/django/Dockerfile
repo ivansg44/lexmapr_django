@@ -10,7 +10,12 @@ RUN apk update \
   # Pillow dependencies
   && apk add jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev \
   # CFFI dependencies
-  && apk add libffi-dev py-cffi
+  && apk add libffi-dev py-cffi \
+  # Install git so we can install the original LexMapr repository as a
+  # package in requirements.txt.
+  && apk add git \
+  # Needed to run commands as django user
+  && apk add --no-cache su-exec
 
 RUN addgroup -S django \
     && adduser -S -G django django
@@ -19,6 +24,9 @@ RUN addgroup -S django \
 COPY ./requirements /requirements
 RUN pip install --no-cache-dir -r /requirements/production.txt \
     && rm -rf /requirements
+
+# Required by LexMapr package
+RUN for i in 1 2 3 4 5 6 7 8; do su-exec django python -m nltk.downloader all && break || sleep 15; done
 
 COPY ./compose/production/django/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint

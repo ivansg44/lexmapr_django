@@ -62,11 +62,11 @@ services:
     ports:
       - "5555:5555"
     command: /start-flower
-  awscli:
-    build:
-      context: .
-      dockerfile: ./compose/production/aws/Dockerfile
-    env_file:
-      - ./.envs/.production/.django
-    volumes:
-      - production_postgres_data_backups:/backups
+#  awscli:
+#    build:
+#      context: .
+#      dockerfile: ./compose/production/aws/Dockerfile
+#    env_file:
+#      - ./.envs/.production/.django
+#    volumes:
+#      - production_postgres_data_backups:/backups
