@@ -4,6 +4,8 @@ volumes:
   production_postgres_data: {}
   production_postgres_data_backups: {}
   production_traefik: {}
+  production_static_data: {}
+  production_media_data: {}
 
 services:
   django: &django
@@ -14,10 +16,15 @@ services:
     depends_on:
       - postgres
       - redis
+    volumes:
+      - production_static_data:/app/lexmapr_django/static
+      - production_media_data:/app/lexmapr_django/media
     env_file:
       - ./.envs/.production/.django
       - ./.envs/.production/.postgres
     command: /start
+    expose:
+      - "5000"
 
   postgres:
     build:
@@ -32,18 +39,31 @@ services:
     ports:
       - "5432:5432"
 
-  traefik:
+#  traefik:
+#    build:
+#      context: .
+#      dockerfile: ./compose/production/traefik/Dockerfile
+#    image: lexmapr_django_production_traefik
+#    depends_on:
+#      - django
+#    volumes:
+#      - production_traefik:/etc/traefik/acme
+#    ports:
+#      - "0.0.0.0:80:80"
+#      - "0.0.0.0:443:443"
+
+  nginx:
     build:
       context: .
-      dockerfile: ./compose/production/traefik/Dockerfile
-    image: lexmapr_django_production_traefik
+      dockerfile: ./compose/production/nginx/Dockerfile
+    image: lexmapr_django_production_nginx
     depends_on:
       - django
     volumes:
-      - production_traefik:/etc/traefik/acme
+      - production_static_data:/app/lexmapr_django/static
+      - production_media_data:/app/lexmapr_django/media
     ports:
-      - "0.0.0.0:80:80"
-      - "0.0.0.0:443:443"
+      - "8000:80"
 
   redis:
     image: redis:5.0
