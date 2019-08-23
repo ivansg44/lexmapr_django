@@ -1,6 +1,7 @@
 from random import getrandbits
 
 from django.core.files.base import ContentFile
+from django.db import transaction
 
 from lexmapr_django.pipeline.models import PipelineJob
 from lexmapr_django.pipeline.tasks import run_lexmapr
@@ -23,7 +24,8 @@ def create_pipeline_job(input_file):
     job.input_file.save(str(job_id) + ".csv", input_file)
     job.output_file.save(str(job_id) + ".tsv", ContentFile(""))
 
-    run_lexmapr.delay(job_id)
+    # Wait for above transactions to complete before calling task
+    transaction.on_commit(lambda: run_lexmapr.delay(job_id))
 
     return job_id
 
