@@ -1,7 +1,89 @@
 {% extends "base.html" %}
 
+{% load i18n static %}
+
 {% block title %}User guide | LexMapr Django {% endblock title %}
 {% block content %}
-  LexMapr is a lexicon and rule-based tool for translating short biomedical
-  specimen descriptions into Semantic Web ontology terms.
+  <p class="lead">
+    An easy-to-use web interface for the command line tool,
+    <a href="https://github.com/Public-Health-Bioinformatics/LexMapr"
+       target="_blank">LexMapr</a>.
+  </p>
+
+  <p>
+    LexMapr Django provides a quick, no-setup solution for users lacking
+    command line expertise, or those that want to forgo the process of
+    installing LexMapr locally.
+  </p>
+
+  <p>
+    <span class="text-warning">
+      Be advised that LexMapr Django is still under development, and does not
+      offer all the functionality available in the original tool.
+    </span>
+    LexMapr Django does not allow you to choose which ontology terms you wish
+    to fetch when mapping your samples. Currently, all samples are mapped
+    against a collection of terms found in
+    <a href="https://github.com/FoodOntology/foodon" target="_blank">Foodon</a>
+    and
+    <a href="https://github.com/EnvironmentOntology/envo" target="_blank">
+      Envo</a>.
+  </p>
+
+  <h1>Instructions</h1>
+
+  <p>
+    As you would with the command line tool, you must prepare a
+    <code>csv</code> file of the following format:
+  </p>
+
+  <p class="border p-2">
+    <code>id,sample</code>
+    <br>
+    <code>1,Chicken Breast</code>
+    <br>
+    <code>2,Baked Potato</code>
+    <br>
+    <code>3,Canned Corn</code>
+    <br>
+    <code>4,Frozen Yogurt</code>
+    <br>
+    <code>5,Apple Pie</code>
+  </p>
+
+  <p>
+    <a data-toggle="collapse" href="#csv_prep_help">
+      Step-by-step instructions on preparing a <code>csv</code> file
+    </a>
+  </p>
+
+  <div class="collapse mb-3" id="csv_prep_help">
+    <div class="card card-body">
+      <p>Open up Microsoft Excel, Apple Numbers or LibreOffice Calc</p>
+
+      <p>Create a spreadsheet like so:</p>
+
+      <div class="mb-3">
+        <img src="{% static 'images/csv_example.png' %}" alt="csv_example.png">
+      </div>
+
+      <p>Save the file as <code>example.csv</code></p>
+
+      <p class="text-warning">Do not forget the <code>.csv</code> extension!</p>
+    </div>
+  </div>
+
+  <p>
+    Then simply upload the <code>csv</code> file as your Input file*, and click
+    Submit.
+  </p>
+
+  <img src="{% static 'images/submission_example.gif' %}"
+       alt="submission_example.gif">
+
+  <p>
+    A job containing your <code>csv</code> data will be submitted to the
+    LexMapr pipeline. You will be provided a temporary link where your job's
+    results will be posted.
+  </p>
 {% endblock %}
