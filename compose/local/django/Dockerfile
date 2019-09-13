@@ -25,6 +25,11 @@ RUN pip install -r /requirements/local.txt
 # Required by LexMapr package
 RUN for i in 1 2 3 4 5 6 7 8; do python -m nltk.downloader all && break || sleep 15; done
 
+# Run LexMapr once to rebuild cache
+COPY ./first_time_run.csv /first_time_run.csv
+COPY ./envo_foodon_config.json /envo_foodon_config.json
+RUN lexmapr /first_time_run.csv -c /envo_foodon_config.json -b
+
 COPY ./compose/production/django/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
 RUN chmod +x /entrypoint
