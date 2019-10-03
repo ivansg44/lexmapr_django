@@ -1,3 +1,4 @@
+from os.path import splitext
 from random import getrandbits
 
 from django.core.files.base import ContentFile
@@ -21,7 +22,8 @@ def create_pipeline_job(input_file):
     job = PipelineJob(id=job_id)
     job.save()
 
-    job.input_file.save(str(job_id) + ".csv", input_file)
+    _, ext = splitext(input_file.name)
+    job.input_file.save(str(job_id) + ext, input_file)
     job.output_file.save(str(job_id) + ".tsv", ContentFile(""))
 
     # Wait for above transactions to complete before calling task

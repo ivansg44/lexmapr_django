@@ -25,8 +25,15 @@ COPY ./requirements /requirements
 RUN pip install --no-cache-dir -r /requirements/production.txt \
     && rm -rf /requirements
 
-# Required by LexMapr package
+# Set up LexMapr. Need to install LexMapr locally for now.
+# TODO: When LexMapr is updated to cache resources in folder with
+#  global write permissions, we can do a global install.
+ENV PATH "$PATH:/home/django/.local/bin"
+RUN su-exec django pip install --user --no-cache-dir git+https://github.com/Public-Health-Bioinformatics/LexMapr#egg=LexMapr
 RUN for i in 1 2 3 4 5 6 7 8; do su-exec django python -m nltk.downloader all && break || sleep 15; done
+COPY ./first_time_run.csv /first_time_run.csv
+COPY ./envo_foodon_config.json /envo_foodon_config.json
+RUN su-exec django lexmapr first_time_run.csv -c envo_foodon_config.json -b
 
 COPY ./compose/production/django/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
