@@ -18,7 +18,7 @@
 
   {% if job_submission_status == 400 %}
     <p class="text-danger">
-      Something went wrong when validating the above form. Please contact us.
+      {{ err_msg }}
     </p>
   {% endif %}
 

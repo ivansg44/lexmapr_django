@@ -16,6 +16,7 @@ def render_pipeline_form(request):
     """
     job_submission_status = None
     job = None
+    err_msg = None
 
     # User just submitted something
     if "job_submission" in request.session:
@@ -25,6 +26,8 @@ def render_pipeline_form(request):
         if job_submission_status == 200:
             job_id = request.session["job_submission"]["id"]
             job = PipelineJob.objects.get(id=job_id)
+        else:
+            err_msg = request.session["job_submission"]["msg"]
 
         request.session.pop("job_submission", None)
         request.session.modified = True
@@ -32,7 +35,8 @@ def render_pipeline_form(request):
     return render(request, "pages/pipeline.html", {
         "form": PipelineForm(),
         "job_submission_status": job_submission_status,
-        "job": job
+        "job": job,
+        "err_msg": err_msg
     })
 
 
@@ -50,9 +54,11 @@ def process_pipeline_input(request):
         input_file = form.cleaned_data["input_file"]
         job_id = create_pipeline_job(input_file)
 
-        request.session["job_submission"] = {"status": 200, "id": job_id}
+        request.session["job_submission"] = {"status": 200, "id": job_id,
+                                             "msg": None}
     else:
-        request.session["job_submission"] = {"status": 400, "id": None}
+        request.session["job_submission"] = {"status": 400, "id": None,
+                                             "msg": form.errors}
 
     return redirect("pipeline:")
 
