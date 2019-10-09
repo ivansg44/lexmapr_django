@@ -23,9 +23,9 @@ def run_lexmapr(job_id):
 
     try:
         run(Namespace(input_file=job.input_file.path,
-                      config="envo_foodon_config.json", format="basic",
-                      output=job.output_file.path, version=False, bucket=True,
-                      no_cache=False))
+                      config=None, format="basic",
+                      output=job.output_file.path, version=False, bucket=False,
+                      no_cache=False, profile="ifsac"))
     except Exception as e:
         job.err = True
         job.err_msg = str(e)

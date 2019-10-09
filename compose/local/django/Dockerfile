@@ -23,11 +23,7 @@ COPY ./requirements /requirements
 RUN pip install -r /requirements/local.txt
 
 # Set up LexMapr
-RUN pip install git+https://github.com/Public-Health-Bioinformatics/LexMapr#egg=LexMapr
 RUN for i in 1 2 3 4 5 6 7 8; do python -m nltk.downloader all && break || sleep 15; done
-COPY ./first_time_run.csv /first_time_run.csv
-COPY ./envo_foodon_config.json /envo_foodon_config.json
-RUN lexmapr /first_time_run.csv -c /envo_foodon_config.json -b
 
 COPY ./compose/production/django/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
