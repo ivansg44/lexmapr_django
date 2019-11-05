@@ -23,7 +23,7 @@ def run_lexmapr(job_id):
 
     try:
         run(Namespace(input_file=job.input_file.path,
-                      config=None, format="basic",
+                      config=None, full=None,
                       output=job.output_file.path, version=False, bucket=False,
                       no_cache=False, profile="ifsac"))
     except Exception as e:
