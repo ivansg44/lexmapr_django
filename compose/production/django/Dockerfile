@@ -1,5 +1,5 @@
 
-FROM python:3.6-alpine
+FROM python:3.7-alpine
 
 ENV PYTHONUNBUFFERED 1
 
@@ -53,6 +53,7 @@ RUN chmod +x /start-flower
 COPY . /app
 
 RUN chown -R django /app
+RUN chown -R django /app/lexmapr_django/media
 
 USER django
 
