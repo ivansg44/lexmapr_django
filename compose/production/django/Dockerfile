@@ -53,7 +53,6 @@ RUN chmod +x /start-flower
 COPY . /app
 
 RUN chown -R django /app
-RUN chown -R django /app/lexmapr_django/media
 
 USER django
 
