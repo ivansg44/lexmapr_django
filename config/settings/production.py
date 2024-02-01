@@ -118,34 +118,34 @@ TEMPLATES[0]["OPTIONS"]["loaders"] = [  # noqa F405
     )
 ]
 
-# EMAIL
-# ------------------------------------------------------------------------------
-# https://docs.djangoproject.com/en/dev/ref/settings/#default-from-email
-DEFAULT_FROM_EMAIL = env(
-    "DJANGO_DEFAULT_FROM_EMAIL", default="LexMapr Django <noreply@lexmapr.com>"
-)
-# https://docs.djangoproject.com/en/dev/ref/settings/#server-email
-SERVER_EMAIL = env("DJANGO_SERVER_EMAIL", default=DEFAULT_FROM_EMAIL)
-# https://docs.djangoproject.com/en/dev/ref/settings/#email-subject-prefix
-EMAIL_SUBJECT_PREFIX = env(
-    "DJANGO_EMAIL_SUBJECT_PREFIX", default="[LexMapr Django]"
-)
+## EMAIL
+## ------------------------------------------------------------------------------
+## https://docs.djangoproject.com/en/dev/ref/settings/#default-from-email
+#DEFAULT_FROM_EMAIL = env(
+#    "DJANGO_DEFAULT_FROM_EMAIL", default="LexMapr Django <noreply@lexmapr.com>"
+#)
+## https://docs.djangoproject.com/en/dev/ref/settings/#server-email
+#SERVER_EMAIL = env("DJANGO_SERVER_EMAIL", default=DEFAULT_FROM_EMAIL)
+## https://docs.djangoproject.com/en/dev/ref/settings/#email-subject-prefix
+#EMAIL_SUBJECT_PREFIX = env(
+#    "DJANGO_EMAIL_SUBJECT_PREFIX", default="[LexMapr Django]"
+#)
 
 # ADMIN
 # ------------------------------------------------------------------------------
 # Django Admin URL regex.
 ADMIN_URL = env("DJANGO_ADMIN_URL")
 
-# Anymail (Mailgun)
-# ------------------------------------------------------------------------------
-# https://anymail.readthedocs.io/en/stable/installation/#installing-anymail
-INSTALLED_APPS += ["anymail"]  # noqa F405
-EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
-# https://anymail.readthedocs.io/en/stable/installation/#anymail-settings-reference
-ANYMAIL = {
-    "MAILGUN_API_KEY": env("MAILGUN_API_KEY"),
-    "MAILGUN_SENDER_DOMAIN": env("MAILGUN_DOMAIN"),
-}
+## Anymail (Mailgun)
+## ------------------------------------------------------------------------------
+## https://anymail.readthedocs.io/en/stable/installation/#installing-anymail
+#INSTALLED_APPS += ["anymail"]  # noqa F405
+#EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
+## https://anymail.readthedocs.io/en/stable/installation/#anymail-settings-reference
+#ANYMAIL = {
+#    "MAILGUN_API_KEY": env("MAILGUN_API_KEY"),
+#    "MAILGUN_SENDER_DOMAIN": env("MAILGUN_DOMAIN"),
+#}
 
 # Gunicorn
 # ------------------------------------------------------------------------------
