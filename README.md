@@ -48,6 +48,7 @@ Edit domain name as appropriate in:
 
 * `ALLOWED_HOSTS` of `config/settings/production.py`
 * Where ever `lexmapr.cidgoh.ca` is in `compose/production/nginx/nginx.conf`
+* `DJANGO_ALLOWED_HOSTS` of `.envs/.production/.django`
 
 Create and run detached containers using `production.yml`.
 
