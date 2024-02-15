@@ -1,0 +1,7 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=lexmapr_django
+POSTGRES_USER=TODO
+POSTGRES_PASSWORD=TODO

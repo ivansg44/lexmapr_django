@@ -35,7 +35,12 @@ docker compose --file local.yml up
 
 ## Production deployment
 
-Create a `.envs/.production/` folder. Populate the folder with a `.django` and `.postgres` file, similar to those in `envs/.local/`.
+Create the following files:
+
+* `.envs/.production/.django`
+* `.envs/.production/.postgres`
+
+Templates of both files are available in the same directory. Fill out the TODOs.
 
 Change `config.settings.local` to `config.settings.production` in `manage.py`.
 
