@@ -63,7 +63,7 @@ docker compose --file production.yml up --detach
 Generate Certbot certificate. Replace `lexmapr.cidgoh.ca` with appropriate domain.
 
 ```bash
-docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ -d lexmapr.cidgoh.ca
+docker compose --file production.yml run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ -d lexmapr.cidgoh.ca
 ```
 
 Uncomment commented-out code in `compose/production/nginx/nginx.conf`, rebuild image, and recreate containers.
